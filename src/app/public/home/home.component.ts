@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 
 import { routerTransition } from '../../router.animations';
 import { LoaderService } from './../shared/services/public/loader.service';
@@ -31,6 +32,8 @@ export class HomeComponent implements OnInit {
     chartAllPositiveCases: any;
     chartAllIncreasedCases: any;
     chartLetalityAvg: any;
+
+    version = environment.VERSION;
 
     /* chartTotalCases: any = {
         chartData: [],
