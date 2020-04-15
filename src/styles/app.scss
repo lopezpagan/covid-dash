@@ -1,0 +1,215 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+@import "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i";
+@import "https://fonts.googleapis.com/css?family=Open+Sans";
+@import "fonts";
+@import "custom";
+@media print {
+    .breadcrumb {
+        display: none !important;
+    }
+}
+
+.sidebar {
+    background-color: var(--primary);
+    color: var(--light);
+    width: 6.5rem !important;
+    height: 100% !important;
+    margin-left: -105px;
+    position: fixed;
+    z-index: 99999;
+    transition: margin-left .75s;
+}
+
+.sidebar-show {
+    .sidebar {
+        margin-left: 0;
+        transition: margin-left .75s;
+    }
+    #sidebarToggleTop {
+        margin-left: 105px;
+        position: relative;
+        transition: margin-left .75s;
+    }
+}
+
+.sidebar .nav-item .nav-link {
+    text-align: center;
+    padding: .75rem 1rem;
+    width: 6.5rem;
+    font-size: .65rem;
+    display: grid;
+}
+
+.nav-item {
+    width: 105px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.nav-item .card {
+    text-align: center;
+    height: 80px;
+    width: 100%;
+    border-radius: 7px;
+}
+
+body {
+    margin: 0;
+    font-family: Open Sans, Helvetica Neue, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--dark);
+    text-align: left;
+}
+
+.googlemap {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden;
+}
+
+.googlemap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#wrapper #content-wrapper {
+    background-color: #EEF1FB;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.col-4.mb-4 {}
+
+.gutters-xs {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.gutters-xs {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.gutters-xs {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.gutters-xs>.col,
+.gutters-xs>[class*="col-"] {
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+.topbar {
+    min-height: 80px;
+    height: auto;
+    background-color: #473F93;
+    color: #FFFFFF;
+}
+
+.topbar #sidebarToggleTop {
+    background-color: #dddfeb;
+}
+
+.btn-link {
+    color: #6B65A7;
+}
+
+.btn-link:hover {
+    color: #6B65A7;
+    text-decoration: underline;
+}
+
+.info-number {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .info-number {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+}
+
+.info-text {
+    font-size: .6rem;
+}
+
+@media (min-width: 768px) {
+    .info-text {
+        font-size: .7rem;
+    }
+}
+
+.chart-title {
+    color: var(--dark);
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+@media (min-width: 1600px) {
+    .chart-title {
+        color: var(--dark);
+        font-size: 1.4rem;
+        font-weight: bolder;
+    }
+}
+
+#map {
+    margin: auto;
+    width: 820px;
+    height: 300px;
+    overflow: hidden;
+}
+
+svg.svg {
+    background-color: #F8F9FC;
+}
+
+.svg-stroke {
+    stroke: #EEF1FB;
+    fill: #473F93;
+    stroke-width: .5px;
+    cursor: pointer;
+}
+
+.svg-stroke:hover {
+    fill: #EEF1FB;
+}
+
+.svg-circle {
+    fill: rgb(86, 114, 216);
+    stroke: #F4B56A;
+    stroke-width: .5px;
+}
+
+.svg-text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: #F4B56A;
+    font-family: 'Courgette', sans-serif;
+}
+
+#card-map {
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    #card-map {
+        display: block;
+    }
+}

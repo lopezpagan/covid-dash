@@ -1,0 +1,363 @@
+<a id="top"></a>
+<div id="wrapper" [@routerTransition]>
+    <app-sidebar></app-sidebar>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <app-header [dailyItems]="dailyItems" [today]="today"></app-header>
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-sm d-none d-sm-inline-block" role="button" href="#" style="background-color: #473F93;color: #ffffff;"><i class="fas fa-share-alt fa-sm text-white-50"></i>&nbsp;Compartir en Facebook</a></div>
+                <div class="row d-flex d-lg-none gutters-xs">
+                    <div class="col-6 col-md-6 col-xl-5 mb-2">
+                        <div class="card bg-warning py-2">
+                            <div class="card-body text-center" style="height: auto;padding: 7px;">
+                                <div class="row text-light align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="font-weight-bold h5 mb-0"><span class="info-number">{{dailyItems.positive | number}}</span></div>
+                                        <div class="text-uppercase text-xs mb-1"><span class="info-text"><strong>afectados</strong></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <div class="card bg-danger py-2">
+                            <div class="card-body" style="height: auto;padding: 7px;">
+                                <div class="row text-center text-light align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="fh5 mb-0"><span class="info-number">{{dailyItems.death | number}}</span></div>
+                                        <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>FALLECIDOS</strong><br></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="card bg-success py-2">
+                            <div class="card-body" style="height: auto;padding: 7px;">
+                                <div class="row text-center text-light align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.negative | number}}</span></div>
+                                        <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>NEGATIVOS</strong></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="card text-light bg-info py-2">
+                            <div class="card-body" style="height: auto;padding: 7px;">
+                                <div class="row text-center align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.pending | number}}</span></div>
+                                        <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>PENDIENTES</strong></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="card text-light bg-secondary py-2">
+                            <div class="card-body" style="height: auto;padding: 7px;">
+                                <div class="row text-center align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.totalTestResults | number}}</span></div>
+                                        <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>PRUEBAS</strong><br></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-xl-2">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-12 mb-4">
+                                <div class="card bg-light shadow-none mb-4 border-0">
+                                    <div class="card-header text-dark border-0 mt-3 text-center">
+                                        <h6 class="font-weight-bold m-0 chart-title">Total de Casos <br/> {{dailyItems?.total | number}}</h6>
+                                    </div>
+                                    <div class="card-body p-2 pt-0">
+                                        <app-pie-chart [chart]="chartTotalCases"></app-pie-chart>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-12 mb-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Camas Adultos</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-charts [charts]="chartTotalCases"></app-charts>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-8">
+                        <!--<div class="card bg-light mb-4" id="card-map">
+                            <div class="card-body p-0">
+                                <div id="map"></div>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title"><strong>Total de Casos Positivos por Fecha</strong></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-bar-chart [chart]="chartAllPositiveCases"></app-bar-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title"><strong>Incremento por Fecha</strong></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-line-chart [chart]="chartAllIncreasedCases"></app-line-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-12 mb-4">
+                                <div class="card bg-light shadow-none mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center m-3 border-0">
+                                        <h6 class="font-weight-bold m-0 chart-title text-center">Tasa de Letalidad <br/>{{dailyItems?.death /dailyItems?.positive * 100 | number: '1.1-1'}}%</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-pie-chart [chart]="chartLetalityAvg"></app-pie-chart>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-12 mb-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Ventiladores Adultos</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-charts [chart]="chartTotalCases"></app-charts>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-lg-4 col-xl-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Registro de Casos</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-charts [chart]="chartTotalCases"></app-charts>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Casos por Región</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-charts [chart]="chartTotalCases"></app-charts>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Listado por Region</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group text-primary">
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Metro</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">139</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Bayamón</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">80</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Mayagüez</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">64</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Caguas</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">55</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Ponce</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">40</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Arecibo</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">34</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Fajardo</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">10</span></div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Listado por Edades</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group text-primary border-0">
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Menores de 10 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">7</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>10-19 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">25</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>20-29 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">105</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>30-39 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">116</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>40-49 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">138</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>50-59 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">178</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>60-69 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">119</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>70-79 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">60</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Más de 80 años</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">35</span></div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item border-0">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>Edad No Disponible</strong></h6>
+                                                    </div>
+                                                    <div class="col-auto"><span class="badge badge-primary text-light">1</span></div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card bg-light mb-4 border-0">
+                                    <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
+                                        <h6 class="font-weight-bold m-0 chart-title">Casos por Edades</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <app-charts [chart]="chartTotalCases"></app-charts>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-light sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © COVID-19 Puerto Rico Dashboard 2020</span></div>
+            </div>
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#top"><i class="fas fa-angle-up"></i></a>
+</div>

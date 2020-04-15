@@ -1,0 +1,84 @@
+<nav class="navbar navbar-light navbar-expand shadow mb-4 topbar static-top">
+    <div class="container-fluid">
+        <button class="btn btn-link rounded-circle mr-3" type="button" id="sidebarToggleTop" (click)="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1 class="d-none d-xl-block" style="font-size: 32px;">COVID-19 DASH&nbsp;</h1>
+        <ul class="nav navbar-nav flex-nowrap ml-auto ">
+            <li class="nav-item no-arrow mx-3" role="presentation" style="margin-right: 0;">
+                <div class="card py-2 border-0" style="background-color: transparent;">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row align-items-center no-gutters" style="color: #ffffff;">
+                            <div class="col mr-2">
+                                <div class="text-uppercase mb-1info-text"><span class="text-center info-text"><strong>{{today | date: 'MMM dd'}}</strong></span></div>
+                                <div class="text-center font-weight-bold h5 mb-0"><span class="info-number">{{today | date: 'yyyy'}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block no-arrow" role="presentation">
+                <div class="card bg-warning py-2 border-0">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row text-light align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold h5 mb-0"><span class="info-number">{{dailyItems?.positive | number}}</span></div>
+                                <div class="text-uppercase text-xs mb-1"><span class="info-text"><strong>AFECTADOS</strong></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block no-arrow" role="presentation">
+                <div class="card bg-danger py-2 border-0">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row text-light align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="fh5 mb-0"><span class="info-number">{{dailyItems?.death | number}}</span></div>
+                                <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>FALLECIDOS</strong><br></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block no-arrow" role="presentation">
+                <div class="card bg-success py-2 border-0">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row text-light align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0"><span class="info-number">{{dailyItems?.negative | number}}</span></div>
+                                <div class="text-uppercase font-weight-bold text-xs mb-1">
+                                    <span class="info-text"><strong>NEGATIVOS</strong></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block no-arrow" role="presentation">
+                <div class="card text-light bg-info py-2 border-0">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0"><span class="info-number">{{dailyItems?.pending | number}}</span></div>
+                                <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>PENDIENTES</strong></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block no-arrow" role="presentation">
+                <div class="card text-light bg-secondary py-2 border-0">
+                    <div class="card-body" style="height: auto;padding: 7px;">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0"><span class="info-number">{{dailyItems?.totalTestResults | number}}</span></div>
+                                <div class="text-uppercase font-weight-bold text-xs mb-1">
+                                    <span class="info-text"><strong>PRUEBAS</strong><br></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

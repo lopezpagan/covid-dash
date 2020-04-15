@@ -1,0 +1,57 @@
+/**
+ * Loader Component
+ */
+
+.hidden {
+    display: none;
+}
+
+.loader-overlay {
+    position: relative;
+    width: 100%;
+    z-index: 500000;
+    top: 0;
+    left: 0;
+}
+
+.loader {
+    height: 7px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #EBF7F8;
+}
+
+.loader:before {
+    display: block;
+    position: absolute;
+    content: "";
+    left: -25px;
+    width: 25px;
+    height: 7px;
+    background-color: var(--info);
+    border-radius: 50%;
+    animation: loading .75s linear infinite;
+}
+
+@keyframes loading {
+    from {
+        left: -200px;
+        width: 30%;
+    }
+    50% {
+        width: 30%;
+    }
+    70% {
+        width: 70%;
+    }
+    80% {
+        left: 50%;
+    }
+    95% {
+        left: 120%;
+    }
+    to {
+        left: 100%;
+    }
+}

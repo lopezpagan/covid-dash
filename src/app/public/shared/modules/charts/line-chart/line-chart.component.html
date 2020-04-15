@@ -1,0 +1,4 @@
+<div class="chart-area" *ngIf="chart?.chartData">
+    <canvas baseChart height="360" [datasets]="chart?.chartData" [labels]="chart?.chartLabels" [chartType]="chart?.chartType" [colors]="chart?.chartColors" [options]="chart?.chartOptions" [legend]="chart?.chartLegend" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+    </canvas>
+</div>

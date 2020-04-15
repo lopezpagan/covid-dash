@@ -1,0 +1,20 @@
+<nav class="navbar navbar-dark align-items-start sidebar accordion p-0" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#" [routerLink]="['/home']">
+            <div class="sidebar-brand-icon rotate-n-15 mt-4"><img class="img-fluid" src="assets/img/devxlab-icon-white.png"></div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="nav navbar-nav text-light mt-4" id="accordionSidebar">
+            <li class="nav-item" role="presentation">
+                <a [routerLink]="['home']" [routerLinkActive]="['router-link-active']" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i><span>{{ 'DASHBOARD' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-file-medical-alt"></i><span>CASOS</span></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-check-double"></i><span>PRUEBAS</span></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-bed"></i><span>CAMAS</span></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-prescription-bottle"></i><span>VENTILADORES</span></a></li>
+        </ul>
+        <div class="text-center d-none d-md-inline"></div>
+    </div>
+</nav>

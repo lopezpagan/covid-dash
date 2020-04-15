@@ -1,0 +1,84 @@
+<div [@routerTransition]>
+    <h2 class="text-muted mt-4 mb-5">Dashboard <small>Statistics Overview</small></h2>
+    <div class="row mb-5">
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></app-stat>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col col-md-4">
+            <div class="card mb-3 border-0">
+                <div class="card-body">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="card mb-3 border-0">
+                <div class="card-body">
+                    <canvas baseChart height="180px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="card mb-3 border-0">
+                <div class="card-body">
+                    <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bell fa-fw"></i> New members
+                </div>
+                <!-- /.card-header -->
+                <app-notification></app-notification>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bell fa-fw"></i> Top Groups
+                </div>
+                <!-- /.card-header -->
+                <app-notification></app-notification>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bell fa-fw"></i> Latest Events
+                </div>
+                <!-- /.card-header -->
+                <app-notification></app-notification>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+</div>

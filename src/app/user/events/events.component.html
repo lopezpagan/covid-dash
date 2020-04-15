@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }} <a [href]="alert.link" class="text-light" target="_blank" *ngIf="alert.link !== ''">Click here</a></ngb-alert>
+    </div>
+
+    <div class="col-md-12">
+        <ngb-carousel>
+            <ng-template ngbSlide [showNavigationArrows]="showNavigationArrows" *ngFor="let slider of sliders">
+                <div class="overlay"></div>
+                <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                <div class="carousel-caption">
+                    <h3 class="carousel-label">{{slider.label}}</h3>
+                    <p class="carousel-text">{{slider.text}}</p>
+                    <a routerLink="slider.link" class="btn btn-primary">View Details</a>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6 col-md-4 col-lg-3 card-box" *ngFor="let card of cards">
+        <div class="card card-button">
+            <div class="card-image-box" [ngStyle]="{ 'background-image': 'url(' + card.imagePath + ')' }"></div>
+            <div class="overlay"></div>
+            <div class="card-body">
+                <h5 class="card-title">{{card.label}}</h5>
+                <p class="card-text">{{card.text}}</p>
+            </div>
+            <a [href]="card.link" class="play-btn text-light"><i class="fa fa-play"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6 col-md-4 col-lg-3 card-box" *ngFor="let card of cards">
+        <div class="card">
+            <div class="card-image-box" [ngStyle]="{ 'background-image': 'url(' + card.imagePath + ')' }">
+                <!--<img class="card-img-top" [src]="card.imagePath" [alt]="card.label">-->
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{card.label}}</h5>
+                <p class="card-text">{{card.text}}</p>
+                <a [href]="card.link" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+</div>
