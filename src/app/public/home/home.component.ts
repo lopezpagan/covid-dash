@@ -13,6 +13,24 @@ import {
 import { take, map, finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
+
+export interface Covid {
+    date: number;
+    state: string;
+    positive: number;
+    negative: number;
+    pending: number;
+    dateChecked: string;
+    death: number;
+    total: number;
+    totalTestResults: number;
+    deathIncrease: number;
+    hospitalizedIncrease: number;
+    negativeIncrease: number;
+    positiveIncrease: number;
+    totalTestResultsIncrease: number;
+}
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -20,13 +38,14 @@ import { DatePipe } from '@angular/common';
     animations: [routerTransition()]
 })
 export class HomeComponent implements OnInit {
-    dailyItems: Array<any> = [];
+    dailyItems: any;
     allCurrentItems: Array<any> = [];
     allInfoItems: Array<any> = [];
     allDailyItems: Array<any> = [];
     alerts: Array<any> = [];
     curdate: number;
     today: string;
+    letalidad: any;
 
     chartTotalCases: any;
     chartAllPositiveCases: any;
@@ -34,12 +53,6 @@ export class HomeComponent implements OnInit {
     chartLetalityAvg: any;
 
     version = environment.VERSION;
-
-    /* chartTotalCases: any = {
-        chartData: [],
-        chartLabels: [],
-        chartType: '',
-    };  */
 
     constructor(
         private dailySearchService: DashStateDailySearchService,
@@ -66,7 +79,7 @@ export class HomeComponent implements OnInit {
                 finalize( () => this.loaderService.hide() )
             )
             .subscribe(
-                (items: any) => {
+                (items: Covid[]) => {
                     this.dailyItems = items;
                     this.getChartTotalCases(items);
                     this.getChartLetalityAvg(items);
@@ -85,7 +98,7 @@ export class HomeComponent implements OnInit {
                 finalize( () => this.loaderService.hide() )
             )
             .subscribe(
-                (items: any) => {
+                (items: Covid[]) => {
                     this.dailyItems = items;
                 },
                 (err) => console.log(err)
@@ -101,7 +114,7 @@ export class HomeComponent implements OnInit {
                 finalize( () => this.loaderService.hide() )
             )
             .subscribe(
-                (items: any) => {
+                (items: Covid[]) => {
                     this.allDailyItems = items;
                     this.getChartAllPositiveCases(items);
                     this.getChartAllIncreasedCases(items);
@@ -117,7 +130,7 @@ export class HomeComponent implements OnInit {
                 finalize( () => this.loaderService.hide() )
             )
             .subscribe(
-                (items: any) => {
+                (items: Covid[]) => {
                     this.allInfoItems = items;
                 },
                 (err) => console.log(err)
@@ -131,7 +144,7 @@ export class HomeComponent implements OnInit {
                 finalize( () => this.loaderService.hide() )
             )
             .subscribe(
-                (items: any) => {
+                (items: Covid[]) => {
                     this.allCurrentItems = items;
                 },
                 (err) => console.log(err)
@@ -142,8 +155,10 @@ export class HomeComponent implements OnInit {
      * Pie Chart Data: Total de Casos
      */
     getChartLetalityAvg(item) {
+        
         const pos = ((item.positive - item.death) / item.positive) * 100;
         const death = (item.death / item.positive) * 100;
+        this.letalidad = death.toFixed(2);
 
         this.chartLetalityAvg = {
             chartType: 'pie',
@@ -253,7 +268,7 @@ export class HomeComponent implements OnInit {
             chartData:  [
                 {data: dataPos, label: 'AFECTADOS', yAxisID: 'y-axis-1'},
                 {data: dataDeath, label: 'FALLECIDOS'},
-                {data: dataTests, label: 'PRUEBAS',},
+                {data: dataTests, label: 'PRUEBAS'},
             ],
             chartColors: [
                 {

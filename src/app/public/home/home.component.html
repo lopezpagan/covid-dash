@@ -6,14 +6,20 @@
             <app-header [dailyItems]="dailyItems" [today]="today"></app-header>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-sm d-none d-sm-inline-block" role="button" href="#" style="background-color: #473F93;color: #ffffff;"><i class="fas fa-share-alt fa-sm text-white-50"></i>&nbsp;Compartir en Facebook</a></div>
+                    <h3 class="text-dark mb-4">Dashboard</h3>
+
+                    <div class="fb-share-button ml-auto" data-href="https://devxlab.com/sites/covid-dash" data-layout="button" data-size="large">
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://devxlab.com/sites/covid-dash&amp;src=sdkpreparse" style="background-color: #473F93;color: #ffffff;" class="fb-xfbml-parse-ignore btn btn-primary btn-block">
+                            <i class="fa fa-share-alt fa-sm text-white-50"></i> Comparte en Facebook</a>
+                    </div>
+                </div>
                 <div class="row d-flex d-lg-none gutters-xs">
                     <div class="col-6 col-md-6 col-xl-5 mb-2">
                         <div class="card bg-warning py-2">
                             <div class="card-body text-center" style="height: auto;padding: 7px;">
                                 <div class="row text-light align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="font-weight-bold h5 mb-0"><span class="info-number">{{dailyItems.positive | number}}</span></div>
+                                        <div class="font-weight-bold h5 mb-0"><span class="info-number">{{ dailyItems?.positive | number}}</span></div>
                                         <div class="text-uppercase text-xs mb-1"><span class="info-text"><strong>afectados</strong></span></div>
                                     </div>
                                 </div>
@@ -25,7 +31,7 @@
                             <div class="card-body" style="height: auto;padding: 7px;">
                                 <div class="row text-center text-light align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="fh5 mb-0"><span class="info-number">{{dailyItems.death | number}}</span></div>
+                                        <div class="fh5 mb-0"><span class="info-number">{{ dailyItems?.death | number}}</span></div>
                                         <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>FALLECIDOS</strong><br></span></div>
                                     </div>
                                 </div>
@@ -37,7 +43,7 @@
                             <div class="card-body" style="height: auto;padding: 7px;">
                                 <div class="row text-center text-light align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.negative | number}}</span></div>
+                                        <div class="h5 mb-0"><span class="info-number">{{ dailyItems?.negative | number}}</span></div>
                                         <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>NEGATIVOS</strong></span></div>
                                     </div>
                                 </div>
@@ -49,7 +55,7 @@
                             <div class="card-body" style="height: auto;padding: 7px;">
                                 <div class="row text-center align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.pending | number}}</span></div>
+                                        <div class="h5 mb-0"><span class="info-number">{{ dailyItems?.pending | number}}</span></div>
                                         <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>PENDIENTES</strong></span></div>
                                     </div>
                                 </div>
@@ -61,7 +67,8 @@
                             <div class="card-body" style="height: auto;padding: 7px;">
                                 <div class="row text-center align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="h5 mb-0"><span class="info-number">{{dailyItems.totalTestResults | number}}</span></div>
+                                        <div class="h5 mb-0"><span class="info-number">{{ dailyItems?.totalTestResults | number}}</span>
+                                        </div>
                                         <div class="text-uppercase font-weight-bold text-xs mb-1"><span class="info-text"><strong>PRUEBAS</strong><br></span></div>
                                     </div>
                                 </div>
@@ -73,7 +80,7 @@
                     <div class="col-md-5 col-xl-4 mb-4">
                         <div class="card bg-light shadow-none mb-4 border-0">
                             <div class="card-header text-dark border-0 mt-3 text-center">
-                                <h6 class="font-weight-bold m-0 chart-title">Total de Casos <br/> {{dailyItems?.total | number}}</h6>
+                                <h6 class="font-weight-bold m-0 chart-title">Total de Casos <br /> {{ dailyItems?.total | number}}</h6>
                             </div>
                             <div class="card-body p-2 pt-0">
                                 <app-pie-chart [chart]="chartTotalCases"></app-pie-chart>
@@ -83,7 +90,8 @@
                     <div class="col-md-7 col-xl-8">
                         <div class="card bg-light mb-4 border-0">
                             <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
-                                <h6 class="font-weight-bold m-0 chart-title"><strong>Total de Casos Positivos por Fecha</strong></h6>
+                                <h6 class="font-weight-bold m-0 chart-title"><strong>Total de Casos Positivos por
+                                        Fecha</strong></h6>
                             </div>
                             <div class="card-body">
                                 <app-bar-chart [chart]="chartAllPositiveCases"></app-bar-chart>
@@ -95,7 +103,8 @@
                     <div class="col-md-5 col-xl-4 mb-4">
                         <div class="card bg-light mb-4 border-0">
                             <div class="card-header text-dark border-0 mt-3 text-center">
-                                <h6 class="font-weight-bold m-0 chart-title">Tasa de Letalidad <br/>{{dailyItems?.death /dailyItems?.positive * 100 | number: '1.1-1'}}%</h6>
+                                <h6 class="font-weight-bold m-0 chart-title">Tasa de Letalidad
+                                    <br />{{ letalidad | number: '1.1-1'}}%</h6>
                             </div>
                             <div class="card-body">
                                 <app-pie-chart [chart]="chartLetalityAvg"></app-pie-chart>
@@ -116,7 +125,8 @@
             </div>
             <footer class="bg-light sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>©2020 DEVX LAB, LLC. • COVID-19 Puerto Rico Dashboard • Version {{version}}</span></div>
+                    <div class="text-center my-auto copyright"><span>©2020 DEVX LAB, LLC. • COVID-19 Puerto Rico
+                            Dashboard • Version {{version}}</span></div>
                 </div>
             </footer>
         </div>
