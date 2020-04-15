@@ -294,6 +294,9 @@ export class HomeComponent implements OnInit {
                     {
                       id: 'y-axis-0',
                       position: 'left',
+                      ticks: {
+                        fontColor: 'rgba(52, 121, 247)',
+                      }
                     },
                     {
                       id: 'y-axis-1',
@@ -302,7 +305,7 @@ export class HomeComponent implements OnInit {
                         color: 'rgba(52, 121, 247, .4)',
                       },
                       ticks: {
-                        fontColor: 'rgb(52, 121, 247)',
+                        fontColor: 'rgb(244, 181, 106)',
                       }
                     }
                   ]
