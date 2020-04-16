@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   DOMAIN: 'http://localhost:4200',
   API_ENDPOINT: 'https://covidtracking.com/api',
-  VERSION: '1.0.4'
+  VERSION: '1.0.5'
 };
 
 /*

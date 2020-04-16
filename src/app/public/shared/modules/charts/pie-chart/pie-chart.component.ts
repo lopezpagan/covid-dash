@@ -20,9 +20,7 @@ export class PieChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-      console.log('chart', this.chart);
-  }
+  ngOnInit() { }
 
 
 }

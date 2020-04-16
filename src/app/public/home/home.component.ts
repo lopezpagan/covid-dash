@@ -42,6 +42,9 @@ export class HomeComponent implements OnInit {
     allCurrentItems: Array<any> = [];
     allInfoItems: Array<any> = [];
     allDailyItems: Array<any> = [];
+
+    allDailyCases: Array<any> = [];
+
     alerts: Array<any> = [];
     curdate: number;
     today: string;
@@ -50,6 +53,7 @@ export class HomeComponent implements OnInit {
     chartTotalCases: any;
     chartAllPositiveCases: any;
     chartAllIncreasedCases: any;
+    chartAllTotalsByDateCases: any;
     chartLetalityAvg: any;
 
     version = environment.VERSION;
@@ -116,8 +120,7 @@ export class HomeComponent implements OnInit {
             .subscribe(
                 (items: Covid[]) => {
                     this.allDailyItems = items;
-                    this.getChartAllPositiveCases(items);
-                    this.getChartAllIncreasedCases(items);
+                    this.setAllCases(items);
                 },
                 (err) => console.log(err)
             );
@@ -182,11 +185,6 @@ export class HomeComponent implements OnInit {
                 }
             }
         };
-
-
-        console.log('dataPos', item.positive);
-        console.log('dataDeath', item.death);
-        console.log('line', this.chartLetalityAvg);
     }
 
     /**
@@ -217,20 +215,43 @@ export class HomeComponent implements OnInit {
         };
     }
 
+    setAllCases(items) {
+        const item: any = items.map( (i) => items.sort( (a, b) => a.date - b.date) );
+        const labels: any = item[0].map( (i) => this.dateFormat( this.convertToDate(i.date), 'MMM dd') );
+        const pos: any = item[0].map( (i) => i.positive );
+        const death: any = item[0].map( (i) => i.death );
+        const tests: any = item[0].map( (i) => i.totalTestResults );
+        const colors: any = item[0].map( (i) => '#473F93' );
+        
+        this.allDailyCases = [{
+            labels: labels,
+            pos: pos,
+            death: death,
+            tests: tests,
+            colors: colors,
+            items: items
+        }];
+
+        console.log(this.allDailyCases);
+
+        this.getChartAllPositiveCases();
+        this.getChartAllIncreasedCases();
+        this.getChartTotalsByDateCases();
+
+    }
+
     /**
      * Bar Chart Data: Total de Casos Positivos por Fecha
      */
-    getChartAllPositiveCases(items) {
-        const item: any = items.map( (i) => items.sort( (a, b) => a.date - b.date) );
+    getChartAllPositiveCases() {  
+        const labels = this.allDailyCases[0].labels;
+        const pos = this.allDailyCases[0].pos;
+        const colors = this.allDailyCases[0].colors;
 
-        const labels: any = item[0].map( (i) => this.dateFormat( this.convertToDate(i.date), 'MMM dd') );
-        const data: any = item[0].map( (i) => i.positive );
-        const colors: any = item[0].map( (i) => '#473F93' );
-        
         this.chartAllPositiveCases = {
             chartType: 'bar',
             chartLabels: labels,
-            chartData:  data,
+            chartData:  pos,
             chartColors: [{
                 borderColor: ['#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
                 backgroundColor: colors
@@ -254,21 +275,20 @@ export class HomeComponent implements OnInit {
     /**
      * Line Chart Data: Total de Casos Positivos por Fecha
      */
-    getChartAllIncreasedCases(items) {
-        const item: any = items.map( (i) => items.sort( (a, b) => a.date - b.date) );
-
-        const labels: any = item[0].map( (i) => this.dateFormat( this.convertToDate(i.date), 'MMM dd') );
-        const dataPos: any = item[0].map( (i) => i.positiveIncrease );
-        const dataDeath: any = item[0].map( (i) => i.deathIncrease ? i.deathIncrease : 0 );
-        const dataTests: any = item[0].map( (i) => i.totalTestResultsIncrease );
+    getChartAllIncreasedCases() {
+        
+        const labels = this.allDailyCases[0].labels;
+        const pos = this.allDailyCases[0].pos;
+        const death = this.allDailyCases[0].death;
+        const tests = this.allDailyCases[0].tests;
         
         this.chartAllIncreasedCases = {
             chartType: 'line',
             chartLabels: labels,
             chartData:  [
-                {data: dataPos, label: 'AFECTADOS', yAxisID: 'y-axis-1'},
-                {data: dataDeath, label: 'FALLECIDOS'},
-                {data: dataTests, label: 'PRUEBAS'},
+                {data: pos, label: 'AFECTADOS'},
+                {data: death, label: 'FALLECIDOS'},
+                {data: tests, label: 'PRUEBAS', yAxisID: 'y-axis-0'},
             ],
             chartColors: [
                 {
@@ -293,21 +313,71 @@ export class HomeComponent implements OnInit {
                   yAxes: [
                     {
                       id: 'y-axis-0',
-                      position: 'left',
-                      ticks: {
-                        fontColor: 'rgba(52, 121, 247)',
-                      }
-                    },
-                    {
-                      id: 'y-axis-1',
                       position: 'right',
                       gridLines: {
                         color: 'rgba(52, 121, 247, .4)',
                       },
                       ticks: {
-                        fontColor: 'rgb(244, 181, 106)',
+                        fontColor: 'rgb(52, 121, 247)',
                       }
-                    }
+                    },
+                  ]
+                },
+              }
+        };
+
+        console.log(this.chartAllIncreasedCases);
+    }
+
+    /**
+     * Line Chart Data: Total de Casos Positivos por Fecha
+     */
+    getChartTotalsByDateCases() {
+        
+        const labels = this.allDailyCases[0].labels;
+        const pos = this.allDailyCases[0].pos;
+        const death = this.allDailyCases[0].death;
+        const tests = this.allDailyCases[0].tests;
+        
+        this.chartAllTotalsByDateCases = {
+            chartType: 'line',
+            chartLabels: labels,
+            chartData:  [
+                {data: pos, label: 'AFECTADOS'},
+                {data: death, label: 'FALLECIDOS'},
+                {data: tests, label: 'PRUEBAS', yAxisID: 'y-axis-0'},
+            ],
+            chartColors: [
+                {
+                    borderColor: 'rgb(244, 181, 106)',
+                    backgroundColor: 'rgba(244, 181, 106, .4)'
+                },
+                {
+                    borderColor: 'rgb(236, 101, 96)',
+                    backgroundColor: 'rgba(236, 101, 96, .4)'
+                },
+                {
+                    borderColor: 'rgb(52, 121, 247)',
+                    backgroundColor: 'rgba(52, 121, 247, .4)'
+                },
+            ],
+            chartLegend: true,
+            chartOptions: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                  xAxes: [{}],
+                  yAxes: [
+                    {
+                      id: 'y-axis-0',
+                      position: 'right',
+                      gridLines: {
+                        color: 'rgba(52, 121, 247, .4)',
+                      },
+                      ticks: {
+                        fontColor: 'rgb(52, 121, 247)',
+                      }
+                    },
                   ]
                 },
               }
