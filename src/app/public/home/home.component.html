@@ -114,7 +114,7 @@
                     <div class="col-md-7 col-xl-8">
                         <div class="card bg-light mb-4 border-0">
                             <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
-                                <h6 class="font-weight-bold m-0 chart-title"><strong>Totales por Día</strong></h6>
+                                <h6 class="font-weight-bold m-0 chart-title"><strong>Incremento Diario</strong></h6>
                             </div>
                             <div class="card-body">
                                 <app-line-chart [chart]="chartAllTotalsByDateCases"></app-line-chart>
@@ -126,10 +126,45 @@
                     <div class="col-12">
                         <div class="card bg-light mb-4 border-0">
                             <div class="card-header text-dark d-flex justify-content-between align-items-center border-0 mt-3">
-                                <h6 class="font-weight-bold m-0 chart-title"><strong>Total Incremental</strong></h6>
+                                <h6 class="font-weight-bold m-0 chart-title">Listado Totales por Día</h6>
                             </div>
                             <div class="card-body">
-                                <app-line-chart [chart]="chartAllIncreasedCases"></app-line-chart>
+                                <ul class="list-group text-primary">
+
+                                    <li class="list-group-item bg-primary text-light">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">Fecha</div>
+                                            <div class="col-2 text-center">Afectados</div>
+                                            <div class="col-2 text-center">Fallecidos</div>
+                                            <div class="col-2 text-center">Negativos</div>
+                                            <div class="col-2 text-center">Pendientes</div>
+                                            <div class="col-2 text-center">Pruebas Realizadas</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="list-group-item" *ngFor="let item of allDailyCases[0]?.items">
+                                        <div class="row align-items-center">
+                                            <div class="col mr-2">
+                                                <h6 class="mb-0"><strong>{{item?.dateChecked | date:'fullDate'}}</strong></h6>
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                {{item?.positive ? item?.positive : 0 | number}}
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                {{item?.death ? item?.death : 0 | number}}
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                {{item?.negative ? item?.negative : 0 | number}}
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                {{item?.pending ? item?.pending : 0 | number}}
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                {{item?.totalTestResults ? item?.totalTestResults : 0 | number}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -146,7 +181,7 @@
             </div>
             <footer class="bg-light sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>©2020 DEVX LAB, LLC. • COVID-19 Puerto Rico
+                    <div class="text-center my-auto copyright"><span>©{{year}} DEVX LAB, LLC. • COVID-19 Puerto Rico
                             Dashboard • Version {{version}}</span></div>
                 </div>
             </footer>

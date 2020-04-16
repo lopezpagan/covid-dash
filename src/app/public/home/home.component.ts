@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
     alerts: Array<any> = [];
     curdate: number;
     today: string;
+    year: string;
     letalidad: any;
 
     chartTotalCases: any;
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.year = this.dateFormat(new Date().toDateString(), 'yyyy');
         this.today = this.dateFormat(new Date().toDateString(), 'yyyy-MM-dd');
         this.getToday();
         this.getDaily();
