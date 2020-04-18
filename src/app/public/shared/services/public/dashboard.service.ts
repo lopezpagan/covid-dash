@@ -16,6 +16,17 @@ export class DashStateCurrentService extends DataService {
 @Injectable({
   providedIn: 'root'
 })
+export class DashMunicipalitiesService extends DataService {
+
+  constructor(http: HttpClient) {
+    super('/Municipios_Joined/FeatureServer/0/query?f=json&cacheHint=true&fbclid=IwAR3Or0UxaxoJ9LGjsxw-Vrmv_1vt7e4uF_Z2GAm0EghLRL4sdaKJYBpdu0g', http);
+  }
+
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class DashStateTodayService extends DataService {
 
   constructor(http: HttpClient) {

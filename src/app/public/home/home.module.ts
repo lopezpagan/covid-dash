@@ -13,9 +13,11 @@ import {
     DashStateInfoService, 
 } from './../shared/services';
 import { LoaderModule, PieChartModule, BarChartModule, LineChartModule } from './../shared/modules';
+import { SortByPipe } from './../shared/pipes/sort-by-pipe.module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { NgpSortModule } from 'ngp-sort-pipe';
 
 @NgModule({
     imports: [
@@ -28,6 +30,7 @@ import { HomeComponent } from './home.component';
         PieChartModule,
         BarChartModule,
         LineChartModule,
+        NgpSortModule,
     ],
     declarations: [
         HomeComponent,
@@ -42,6 +45,7 @@ import { HomeComponent } from './home.component';
         DashStateCurrentService, 
         DashStateInfoService, 
         DatePipe,
+        SortByPipe,
     ]
 })
 export class HomeModule {}

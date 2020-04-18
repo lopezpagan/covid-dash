@@ -9,6 +9,7 @@ import {
     DashStateTodayService,
     DashStateInfoService,
     DashStateCurrentService,
+    DashMunicipalitiesService,
 } from '../shared/services';
 import { take, map, finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
@@ -42,8 +43,8 @@ export class HomeComponent implements OnInit {
     allCurrentItems: Array<any> = [];
     allInfoItems: Array<any> = [];
     allDailyItems: Array<any> = [];
-
     allDailyCases: Array<any> = [];
+    allMunicipalitiesCases: Array<any> = [];
 
     alerts: Array<any> = [];
     curdate: number;
@@ -57,6 +58,9 @@ export class HomeComponent implements OnInit {
     chartAllTotalsByDateCases: any;
     chartLetalityAvg: any;
 
+    chartMunicipalitiesCases: any;
+    chartAllMunicipalitiesCases: any;
+
     version = environment.VERSION;
 
     constructor(
@@ -65,6 +69,7 @@ export class HomeComponent implements OnInit {
         private dailyService: DashStateDailyService,
         private infoService: DashStateInfoService,
         private currentService: DashStateCurrentService,
+        private municipalitiesService: DashMunicipalitiesService,
         private loaderService: LoaderService,
         private datePipe: DatePipe,
     ) {}
@@ -74,6 +79,7 @@ export class HomeComponent implements OnInit {
         this.today = this.dateFormat(new Date().toDateString(), 'yyyy-MM-dd');
         this.getToday();
         this.getDaily();
+        this.getMunicipalities();
         // this.getDailySearch('2020-04-01');        
     }
 
@@ -156,6 +162,70 @@ export class HomeComponent implements OnInit {
             );
     }
 
+    getMunicipalities() {
+        const params = '&where=Total%3C%3E0&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Total%20desc&resultOffset=0&resultRecordCount=80';
+        this.municipalitiesService.get(params, 'external')
+            .pipe(
+                take(1),
+                map( (items: any) => items.features ),
+                finalize( () => this.loaderService.hide() )
+            )
+            .subscribe(
+                (items: any) => {
+                    // this.allMunicipalitiesCases = items;
+                    this.setMunicipalities(items);
+                    // this.getChartAllMunicipalitiesCases();
+                },
+                (err) => console.log(err)
+            );
+    }
+
+    setAllCases(items) {
+        const item: any = items.map( (i) => items.sort( (a, b) => a.date - b.date) );
+        const labels: any = item[0].map( (i) => this.dateFormat( this.convertToDate(i.date), 'MMM dd') );
+        const pos: any = item[0].map( (i) => i.positive );
+        const death: any = item[0].map( (i) => i.death );
+        const tests: any = item[0].map( (i) => i.totalTestResults );
+        const colors: any = item[0].map( (i) => '#473F93' );
+        
+        this.allDailyCases = [{
+            labels: labels,
+            pos: pos,
+            death: death,
+            tests: tests,
+            colors: colors,
+            items: items
+        }];
+
+        this.getChartAllPositiveCases();
+        this.getChartAllIncreasedCases();
+        this.getChartTotalsByDateCases();
+    }
+
+    setMunicipalities(items) {
+        console.log(items);
+        const labels: any = items.map( (i) => i.attributes.municipio );
+        const totals: any = items.map( (i) => i.attributes.Total );
+        const pTotal: any = totals.reduce( (a, b) => a + b );
+        const percents: any = totals.map( (i) => (i / pTotal * 100).toFixed(2) );
+        const borders: any = items.map( (i) => `#ffffff` );
+        // tslint:disable-next-line:max-line-length
+        const colors: any = items.map( (i) => `rgb(229, 176, ${Math.random() * 100 + 91})` );
+        
+        this.allMunicipalitiesCases = [{
+            labels: labels,
+            totals: totals,
+            pTotal: pTotal,
+            percents: percents,
+            borders: borders,
+            colors: colors,
+            items: items
+        }];
+
+        this.getChartMunicipalitiesCases();
+        this.getChartAllMunicipalitiesCases();
+    }
+
     /**
      * Pie Chart Data: Total de Casos
      */
@@ -217,29 +287,34 @@ export class HomeComponent implements OnInit {
         };
     }
 
-    setAllCases(items) {
-        const item: any = items.map( (i) => items.sort( (a, b) => a.date - b.date) );
-        const labels: any = item[0].map( (i) => this.dateFormat( this.convertToDate(i.date), 'MMM dd') );
-        const pos: any = item[0].map( (i) => i.positive );
-        const death: any = item[0].map( (i) => i.death );
-        const tests: any = item[0].map( (i) => i.totalTestResults );
-        const colors: any = item[0].map( (i) => '#473F93' );
-        
-        this.allDailyCases = [{
-            labels: labels,
-            pos: pos,
-            death: death,
-            tests: tests,
-            colors: colors,
-            items: items
-        }];
+    getChartMunicipalitiesCases() {
+        const labels = this.allMunicipalitiesCases[0].labels;
+        const percents = this.allMunicipalitiesCases[0].percents;
+        const borders = this.allMunicipalitiesCases[0].borders;
+        const colors = this.allMunicipalitiesCases[0].colors;
 
-        console.log(this.allDailyCases);
-
-        this.getChartAllPositiveCases();
-        this.getChartAllIncreasedCases();
-        this.getChartTotalsByDateCases();
-
+        this.chartMunicipalitiesCases = {
+            chartType: 'pie',
+            chartLabels: labels,
+            chartData:  percents,
+            chartColors: [{
+                borderColor: borders,
+                backgroundColor: colors
+            }],
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                    reverse: false,
+                    position: 'bottom'
+                },
+                title: {
+                    position: 'top',
+                    display: false
+                }
+            }
+        };
     }
 
     /**
@@ -256,6 +331,39 @@ export class HomeComponent implements OnInit {
             chartData:  pos,
             chartColors: [{
                 borderColor: ['#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
+                backgroundColor: colors
+            }],
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                    reverse: false,
+                    position: 'bottom'
+                },
+                title: {
+                    position: 'top',
+                    display: false
+                }
+            }
+        };
+    }
+
+    /**
+     * Bar Chart Data: Total de Casos Positivos por Fecha
+     */
+    getChartAllMunicipalitiesCases() {  
+        const labels = this.allMunicipalitiesCases[0].labels;
+        const totals = this.allMunicipalitiesCases[0].totals;
+        const borders = this.allMunicipalitiesCases[0].borders;
+        const colors = this.allMunicipalitiesCases[0].colors;
+
+        this.chartAllMunicipalitiesCases = {
+            chartType: 'bar',
+            chartLabels: labels,
+            chartData:  totals,
+            chartColors: [{
+                borderColor: borders,
                 backgroundColor: colors
             }],
             chartOptions: {
@@ -327,8 +435,6 @@ export class HomeComponent implements OnInit {
                 },
               }
         };
-
-        console.log(this.chartAllIncreasedCases);
     }
 
     /**

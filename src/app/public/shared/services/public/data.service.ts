@@ -9,8 +9,11 @@ export class DataService {
 
   constructor(private endPoint: string, private http: HttpClient) {}
 
-  get(param?: string) {
-    const uri = this.ROOT_URL + this.endPoint + param;
+  get(param?: string, type: string = '') {
+    let uri = this.ROOT_URL + this.endPoint + param;
+    if (type === 'external') {
+      uri = `https://services5.arcgis.com/klquQoHA0q9zjblu/arcgis/rest/services${this.endPoint}${param}`;
+    }
 
     return this.http.get(uri)
                     .pipe(map(response => response))
