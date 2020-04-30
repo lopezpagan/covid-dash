@@ -2,6 +2,7 @@
 
 Simple Dashboard Demo App built using Angular 9 and Bootstrap 4
 
-git clone
-npm install
-ng serve
+- git clone https://github.com/lopezpagan/covid-dash.git
+- cd covid-dash
+- npm install
+- ng serve
